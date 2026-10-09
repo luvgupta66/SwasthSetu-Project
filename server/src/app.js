@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
+import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -26,6 +27,11 @@ import { authenticate } from './middleware/auth.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
+if (process.env.DEMO_MODE === undefined && process.env.NODE_ENV !== 'production') {
+  process.env.DEMO_MODE = 'true';
+}
 
 const app = express();
 
@@ -91,4 +97,3 @@ app.use(notFoundHandler);
 app.use(errorHandler);
 
 export default app;
-

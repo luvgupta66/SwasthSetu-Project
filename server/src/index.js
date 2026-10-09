@@ -24,7 +24,7 @@ initSocket(io);
 // Start Server
 const startServer = async () => {
   try {
-    await connectDB();
+    const databaseConnection = connectDB();
     server.listen(PORT, () => {
       console.log(`====================================================`);
       console.log(`  SWASTHSETU HEALTHCARE PLATFORM BACKEND STARTED   `);
@@ -33,11 +33,11 @@ const startServer = async () => {
       console.log(`  Demo Mode:   ${process.env.DEMO_MODE === 'true' ? 'ACTIVE (OTP: 123456)' : 'OFF'}`);
       console.log(`====================================================`);
     });
+    await databaseConnection;
   } catch (err) {
     console.error('Fatal Server Boot Error:', err);
-    process.exit(1);
+    server.close(() => process.exit(1));
   }
 };
 
 startServer();
-

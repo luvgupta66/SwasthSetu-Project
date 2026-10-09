@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import NavbarLogo from './../../../public/NavbarLogo.png'
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Activity, Globe, Menu, X, ArrowRight, ShieldCheck, User } from 'lucide-react';
@@ -23,7 +22,7 @@ export const Navbar = () => {
         <div className="flex justify-between h-16 items-center">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
-            <img  className = "h-30 w-40" src={NavbarLogo} alt="" />
+            <img className="h-30 w-40" src="/NavbarLogo.png" alt="" />
           </Link>
 
           {/* Desktop Nav Links */}
@@ -173,4 +172,3 @@ export const Navbar = () => {
     </nav>
   );
 };
-

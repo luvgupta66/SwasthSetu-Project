@@ -123,7 +123,14 @@ This single command concurrently starts:
 - **Backend API**: `http://localhost:5000`
 - **Frontend App**: `http://localhost:5173`
 
-Open `http://localhost:5173` in your browser.
+Open the **Local** URL printed by Vite in your browser (normally
+`http://localhost:5173`; Vite chooses the next available port if it is busy).
+
+MongoDB is optional for local development. If it is unavailable, the backend uses
+the seeded in-memory demo data and enables demo OTP `123456` automatically.
+To configure MongoDB or override development settings, copy
+`server/.env.example` to `server/.env` and edit the values. Demo mode is not
+enabled automatically in production.
 
 ---
 

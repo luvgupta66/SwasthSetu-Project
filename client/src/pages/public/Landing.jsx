@@ -93,10 +93,6 @@ export const Landing = () => {
               transition={{ duration: 0.5 }}
               className="lg:col-span-7 space-y-6 text-left"
             >
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-100/70 text-brand-700 text-xs font-semibold">
-                <ShieldCheck className="w-4 h-4 text-brand-600" />
-                <span>National Hackathon 2026 • Rural Healthcare Architecture</span>
-              </div>
 
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-navy-900 tracking-tight leading-tight">
                 Connecting Rural India to <span className="text-brand-500">Better Healthcare</span>

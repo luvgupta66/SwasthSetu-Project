@@ -58,8 +58,9 @@ export const RegisterPatient = () => {
         consentForSharing: formData.consentForSharing,
       });
 
-      toast.success(`Patient registered successfully! ID: ${res.data?.patientId}`);
-      setCreatedPatient(res.data);
+      const patient = res.data?.data;
+      toast.success(`Patient registered successfully! ID: ${patient?.patientId}`);
+      setCreatedPatient(patient);
     } catch (err) {
       toast.error(err.message || 'Failed to register patient');
     } finally {
@@ -339,4 +340,3 @@ export const RegisterPatient = () => {
     </div>
   );
 };
-

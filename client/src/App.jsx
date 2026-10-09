@@ -72,7 +72,7 @@ const ProtectedRoute = ({ allowedRoles, children }) => {
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <AuthProvider>
         <SocketProvider>
           <Routes>
@@ -175,4 +175,3 @@ export default function App() {
     </BrowserRouter>
   );
 }
-

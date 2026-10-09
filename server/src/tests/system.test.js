@@ -97,6 +97,56 @@ test('3. Authentication Flow for All 5 Roles', async () => {
   }
 });
 
+test('3a. Login Rejects Malformed Credentials With a Client Error', async () => {
+  const res = await request('/api/auth/login', {
+    method: 'POST',
+    body: { phone: ['9876543211'], otp: '123456' },
+  });
+
+  assert.equal(res.status, 400);
+  assert.equal(res.data.code, 'VALIDATION_ERROR');
+});
+
+test('3b. Patient Registration Validates Input and Returns the Created Patient', async () => {
+  const loginRes = await request('/api/auth/login', {
+    method: 'POST',
+    body: { phone: '9876543211', otp: '123456' },
+  });
+  const token = loginRes.data.data.token;
+  const patientPayload = {
+    name: 'Registration Test Patient',
+    age: 28,
+    gender: 'Female',
+    phone: '9876500010',
+    village: 'Rampur Kalan',
+    district: 'Sitapur',
+    address: '',
+    conditions: [],
+    allergies: [],
+    pregnancy: { isPregnant: false, trimester: null },
+    emergencyContact: { name: '', phone: '', relation: '' },
+    consentForSharing: true,
+  };
+
+  const invalidRes = await request('/api/patients', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${token}` },
+    body: { ...patientPayload, age: 'not-a-number' },
+  });
+  assert.equal(invalidRes.status, 400);
+  assert.equal(invalidRes.data.code, 'VALIDATION_ERROR');
+
+  const registrationRes = await request('/api/patients', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${token}` },
+    body: patientPayload,
+  });
+  assert.equal(registrationRes.status, 201);
+  assert.equal(registrationRes.data.success, true);
+  assert.equal(registrationRes.data.data.name, patientPayload.name);
+  assert.ok(registrationRes.data.data.patientId);
+});
+
 test('4. Deterministic Clinical Triage Engine with Bilingual Explanations', async () => {
   // Login as Health Worker
   const hwLogin = await request('/api/auth/login', {
@@ -241,4 +291,3 @@ test('9. Printable PDFKit Prescription Generation', async () => {
   assert.ok(ct.includes('application/pdf'));
   assert.ok(res.buffer.byteLength > 1000);
 });
-
